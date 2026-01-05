@@ -1,0 +1,62 @@
+<div class="preview-container">
+  @if (loading()) {
+  <div class="loading">
+    <p>Cargando encuesta...</p>
+  </div>
+  } @else if (error()) {
+  <div class="error-card">
+    <h2>Error</h2>
+    <p>{{ error() }}</p>
+    <button class="btn btn-primary" (click)="goBack()">Volver al Dashboard</button>
+  </div>
+  } @else if (survey()) {
+  <div class="preview-card">
+    <div class="preview-header">
+      <div>
+        <h2>{{ survey()!.title }}</h2>
+        <p class="description">{{ survey()!.description }}</p>
+        <span class="badge" [class.published]="survey()!.isPublished">
+          {{ survey()!.isPublished ? '✅ Publicada' : '📝 Borrador' }}
+        </span>
+      </div>
+      <a routerLink="/dashboard" class="btn-back">← Volver al Dashboard</a>
+    </div>
+
+    <div class="questions-preview">
+      @for (question of survey()!.questions; track $index; let i = $index) {
+      <div class="question-preview">
+        <div class="question-number">Pregunta {{ i + 1 }}</div>
+        <h3>{{ question.text }}</h3>
+
+        @if (question.type === 'text') {
+        <div class="answer-preview">
+          <input type="text" disabled placeholder="El usuario escribirá aquí su respuesta...">
+        </div>
+        }
+
+        @if (question.type === 'multiple_choice') {
+        <div class="answer-preview">
+          @for (option of question.options; track $index) {
+          <label class="option-preview">
+            <input type="radio" disabled name="q{{ i }}">
+            <span>{{ option }}</span>
+          </label>
+          }
+        </div>
+        }
+
+        @if (question.type === 'scale') {
+        <div class="answer-preview scale">
+          <span>1</span>
+          @for (num of [1,2,3,4,5,6,7,8,9,10]; track $index) {
+          <input type="radio" disabled name="scale{{ i }}">
+          }
+          <span>10</span>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

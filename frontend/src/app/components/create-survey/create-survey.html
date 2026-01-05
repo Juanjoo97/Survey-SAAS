@@ -1,0 +1,144 @@
+<div class="create-survey-container">
+  <div class="card">
+    <h2>Crear Nueva Encuesta</h2>
+
+    <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+      <div class="section">
+        <h3>Detalles Generales</h3>
+        <div class="form-group">
+          <label for="title">Título</label>
+          <input 
+            type="text" 
+            id="title" 
+            formControlName="title" 
+            class="form-control"
+            [class.is-invalid]="surveyForm.get('title')?.invalid && surveyForm.get('title')?.touched"
+            placeholder="Ej: Encuesta de satisfacción del cliente"
+          >
+          @if (surveyForm.get('title')?.invalid && surveyForm.get('title')?.touched) {
+            <div class="invalid-feedback">
+              El título es requerido.
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            class="form-control" 
+            rows="3"
+            placeholder="Opcional: Describe el propósito de tu encuesta..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <h3>Preguntas</h3>
+          <button 
+            type="button" 
+            class="btn btn-outline-primary btn-sm" 
+            (click)="addQuestion()"
+          >
+            + Agregar Pregunta
+          </button>
+        </div>
+
+        @if (questions.length === 0) {
+          <div class="empty-questions">
+            <p>No hay preguntas. Agrega la primera pregunta para continuar.</p>
+          </div>
+        }
+
+        <div formArrayName="questions">
+          @for (question of questions.controls; track $index; let i = $index) {
+            <div [formGroupName]="i" class="question-card">
+              <div class="question-header">
+                <h4>Pregunta {{ i + 1 }}</h4>
+                <button 
+                  class="btn-icon" 
+                  (click)="removeQuestion(i)" 
+                  title="Eliminar pregunta"
+                  *ngIf="questions.length > 1"
+                >
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+
+              <div class="form-group">
+                <label>Texto de la pregunta</label>
+                <input 
+                  type="text" 
+                  formControlName="text" 
+                  class="form-control"
+                  [class.is-invalid]="getQuestionGroup(i).get('text')?.invalid && getQuestionGroup(i).get('text')?.touched"
+                  placeholder="Ej: ¿Cómo calificarías nuestro servicio?"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Tipo de respuesta</label>
+                <select formControlName="type" class="form-control">
+                  <option value="text">Texto Libre</option>
+                  <option value="multiple_choice">Opción Múltiple</option>
+                  <option value="scale">Escala (1-10)</option>
+                </select>
+              </div>
+
+              @if (getQuestionGroup(i).get('type')?.value === 'multiple_choice') {
+                <div class="options-section">
+                  <label>Opciones</label>
+                  <div formArrayName="options">
+                    @for (option of getOptions(i).controls; track $index; let j = $index) {
+                      <div class="option-row">
+                        <input 
+                          [formControlName]="j" 
+                          class="form-control form-control-sm" 
+                          placeholder="Opción {{ j + 1 }}"
+                        >
+                        <button 
+                          type="button" 
+                          class="btn-icon-sm" 
+                          (click)="removeOption(i, j)"
+                          *ngIf="getOptions(i).length > 2"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    }
+                  </div>
+                  <button 
+                    type="button" 
+                    class="btn-link-sm" 
+                    (click)="addOption(getOptions(i))"
+                  >
+                    + Agregar Opción
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      @if (error()) {
+        <div class="alert alert-danger">
+          {{ error() }}
+        </div>
+      }
+
+      <div class="actions">
+        <a routerLink="/dashboard" class="btn btn-secondary">Cancelar</a>
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="surveyForm.invalid || loading()"
+        >
+          {{ loading() ? 'Creando...' : 'Crear Encuesta' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

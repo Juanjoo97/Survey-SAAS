@@ -1,0 +1,88 @@
+<div class="response-container">
+  @if (loading()) {
+    <div class="loading">
+      Cargando encuesta...
+    </div>
+  }
+
+  @if (error()) {
+    <div class="alert alert-danger">
+      {{ error() }}
+    </div>
+  }
+
+  @if (success()) {
+    <div class="success-message">
+      <h2>¡Gracias por tu respuesta!</h2>
+      <p>Tus respuestas han sido registradas exitosamente.</p>
+    </div>
+  }
+
+  @if (!loading() && !error() && !success() && survey()) {
+    <div class="survey-card">
+      <div class="survey-header">
+        <h1>{{ survey()!.title }}</h1>
+        <p>{{ survey()!.description }}</p>
+      </div>
+
+      <form [formGroup]="responseForm" (ngSubmit)="onSubmit()">
+        <div formArrayName="answers">
+          @for (control of answersControls; track $index; let i = $index) {
+            <div [formGroupName]="i" class="question-item">
+              <label class="question-text">
+                {{ survey()!.questions![i].text }}
+              </label>
+
+              <!-- Text Input -->
+              @if (survey()!.questions![i].type === 'text') {
+                <textarea 
+                  formControlName="value" 
+                  class="form-control" 
+                  rows="3"
+                  [class.is-invalid]="control.get('value')?.invalid && control.get('value')?.touched"
+                ></textarea>
+              }
+
+              <!-- Multiple Choice -->
+              @if (survey()!.questions![i].type === 'multiple_choice') {
+                <select 
+                  formControlName="value" 
+                  class="form-control"
+                  [class.is-invalid]="control.get('value')?.invalid && control.get('value')?.touched"
+                >
+                  <option value="">Selecciona una opción</option>
+                  @for (opt of survey()!.questions![i].options; track opt) {
+                    <option [value]="opt">{{ opt }}</option>
+                  }
+                </select>
+              }
+
+              @if (survey()!.questions![i].type === 'scale') {
+                <div class="scale-options">
+                  @for (n of [1,2,3,4,5,6,7,8,9,10]; track n) {
+                    <label class="scale-option">
+                      <input type="radio" formControlName="value" [value]="n">
+                      <span>{{ n }}</span>
+                    </label>
+                  }
+                </div>
+              }
+
+              @if (control.get('value')?.invalid && control.get('value')?.touched) {
+                <div class="invalid-feedback">
+                  Esta pregunta es requerida.
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="responseForm.invalid || submitting()">
+            {{ submitting() ? 'Enviando...' : 'Enviar Respuestas' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

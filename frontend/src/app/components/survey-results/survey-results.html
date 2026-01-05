@@ -1,0 +1,43 @@
+@if (loading()) {
+<div class="loading">Cargando resultados...</div>
+}
+
+@if (error()) {
+<div class="error">{{ error() }}</div>
+}
+
+@if (results()) {
+<div class="results-container">
+  <div class="header">
+    <h2>Resultados: {{ results()!.surveyTitle }}</h2>
+    <a routerLink="/dashboard" class="btn-back">← Volver al Dashboard</a>
+  </div>
+
+  @for (q of results()!.results; track q.questionId) {
+  <div class="question-card">
+    <h3>{{ q.text }}</h3>
+    <p class="meta">Total de respuestas: {{ q.totalAnswers }}</p>
+
+    @if (q.type === 'multiple_choice' || q.type === 'scale') {
+    <div class="chart-container">
+      <canvas #chartCanvas [attr.data-question-id]="q.questionId"></canvas>
+    </div>
+    }
+
+    @if (q.type === 'text') {
+    <div class="text-responses">
+      @if (q.analysis.responses && q.analysis.responses.length > 0) {
+      <ul>
+        @for (response of q.analysis.responses; track $index) {
+        <li>{{ response }}</li>
+        }
+      </ul>
+      } @else {
+      <p>No hay respuestas de texto aún.</p>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>
+}

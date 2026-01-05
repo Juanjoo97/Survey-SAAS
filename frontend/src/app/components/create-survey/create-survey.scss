@@ -1,0 +1,62 @@
+.create-survey-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 { margin-top: 0; margin-bottom: 2rem; color: #333; }
+h3 { margin-bottom: 1.5rem; color: #555; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
+
+.section { margin-bottom: 3rem; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+
+.question-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; h4 { margin: 0; color: #666; } }
+
+.form-group { margin-bottom: 1rem; label { display: block; margin-bottom: 0.5rem; font-weight: 500; } }
+
+.form-control {
+  width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; box-sizing: border-box;
+  &:focus { outline: none; border-color: #007bff; }
+  &.is-invalid { border-color: #dc3545; }
+  &-sm { padding: 0.5rem; font-size: 0.9rem; }
+}
+
+.options-section { margin-top: 1rem; padding-left: 1rem; border-left: 3px solid #ddd; }
+.option-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+
+.invalid-feedback { color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem; }
+
+.actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; }
+
+.btn {
+  padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; text-decoration: none; display: inline-block;
+  &-primary { background-color: #007bff; color: white; &:hover { background-color: #0056b3; } &:disabled { background-color: #ccc; } }
+  &-secondary { background-color: #6c757d; color: white; &:hover { background-color: #5a6268; } }
+  &-outline-primary { border: 1px solid #007bff; color: #007bff; background: transparent; &:hover { background-color: #f0f8ff; } }
+  &-sm { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+}
+
+.btn-icon:hover .material-icons {
+  color: #cc0000;
+}
+
+.btn-icon { background: none; border: none; cursor: pointer; font-size: 1.2rem; opacity: 0.6; &:hover { opacity: 1; color: #dc3545; } }
+.btn-icon-sm { background: none; border: none; cursor: pointer; color: #dc3545; font-weight: bold; }
+.btn-link-sm { background: none; border: none; cursor: pointer; color: #007bff; font-size: 0.9rem; padding: 0; &:hover { text-decoration: underline; } }
+
+.alert { padding: 1rem; background-color: #f8d7da; color: #721c24; border-radius: 4px; margin-bottom: 1rem; }

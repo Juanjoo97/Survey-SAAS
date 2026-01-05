@@ -1,0 +1,137 @@
+.response-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.survey-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.survey-header {
+  margin-bottom: 2rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+
+  h1 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+
+  p {
+    color: #666;
+    margin: 0;
+  }
+}
+
+.question-item {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+
+  .question-text {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+  }
+}
+
+.scale-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.scale-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  
+  input {
+    margin-bottom: 0.25rem;
+  }
+
+  span {
+    font-size: 0.9rem;
+  }
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  
+  &-primary {
+    background-color: #007bff;
+    color: white;
+    &:hover { background-color: #0056b3; }
+    &:disabled { background-color: #ccc; }
+  }
+
+  &-block {
+    display: block;
+    width: 100%;
+  }
+}
+
+.loading, .alert, .success-message {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  
+  h2 { margin-top: 0; }
+  a { margin-top: 1rem; }
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
