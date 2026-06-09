@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://surveysaas-lates.onrender.com'
+    apiUrl: 'https://survey-saas-backend.onrender.com'
 };
