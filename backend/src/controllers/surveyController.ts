@@ -1,14 +1,8 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { Survey } from '../models/Survey';
 import { Question, QuestionType } from '../models/Question';
 import { Answer } from '../models/Answer';
-
-interface AuthRequest extends Request {
-  user?: {
-    id: number;
-    email: string;
-  };
-}
+import { AuthRequest } from '../types';
 
 export const createSurvey = async (req: AuthRequest, res: Response) => {
   try {

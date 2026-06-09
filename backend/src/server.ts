@@ -8,46 +8,40 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-// Crear servidor HTTP
 const httpServer = createServer(app);
 
-// Configurar Socket.io
 const io = new Server(httpServer, {
   cors: {
     origin: [
       'https://mysurveysaas.web.app',
       'https://mysurveysaas.firebaseapp.com',
-      'http://localhost:4200', // Para desarrollo local
-    ], methods: ['GET', 'POST'],
+      'http://localhost:4200',
+    ],
+    methods: ['GET', 'POST'],
     credentials: true
   }
 });
 
-// Hacer io accesible en toda la app
 app.set('io', io);
 
-// Manejar conexiones de Socket.io
 io.on('connection', (socket) => {
-  // Cliente se une a una "sala" de encuesta específica
   socket.on('join-survey', (surveyId: number) => {
-    socket.join(`survey-${surveyId}`);
+    if (surveyId) socket.join(`survey-${surveyId}`);
   });
 
-  // Cliente sale de una sala
   socket.on('leave-survey', (surveyId: number) => {
-    socket.leave(`survey-${surveyId}`);
+    if (surveyId) socket.leave(`survey-${surveyId}`);
   });
 });
 
 const startServer = async () => {
   try {
     await connectDB();
-
     httpServer.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`Server running on port ${PORT}`);
     });
   } catch (error) {
-    console.error('Error server:', error);
+    console.error('Server error:', error);
     process.exit(1);
   }
 };
