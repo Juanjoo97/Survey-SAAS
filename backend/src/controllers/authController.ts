@@ -35,7 +35,8 @@ export const register = async (req: Request, res: Response) => {
 
     res.status(201).json({ token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
   } catch (error) {
-    res.status(500).json({ message: 'Error registrando usuario', error });
+    const message = error instanceof Error ? error.message : String(error);
+    res.status(500).json({ message: 'Error registrando usuario', error: message });
   }
 };
 

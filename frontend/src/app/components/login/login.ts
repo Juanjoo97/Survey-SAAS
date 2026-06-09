@@ -44,10 +44,8 @@ export class LoginComponent {
         },
         error: (err) => {
           this.loading.set(false);
-          if (err.error) {
-            this.showErrorModal.set(true);
-            this.modalMessage.set('');
-          }
+          this.showErrorModal.set(true);
+          this.modalMessage.set(err.error?.message || 'Error al iniciar sesión');
         }
       });
     } else {

@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set('Error al cargar las encuestas');
+        this.error.set(err.error?.message || 'Error al cargar las encuestas');
       }
     });
   }
@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
         this.closeDeleteModal();
       },
       error: (err) => {
-        this.error.set('Error al eliminar la encuesta');
+        this.error.set(err.error?.message || 'Error al eliminar la encuesta');
         this.closeDeleteModal();
       }
     });
@@ -101,8 +101,8 @@ export class DashboardComponent implements OnInit {
           newStatus ? 'Encuesta publicada' : 'Encuesta guardada como borrador'
         );
       },
-      error: () => {
-        this.error.set('Error al actualizar el estado');
+      error: (err: any) => {
+        this.error.set(err.error?.message || 'Error al actualizar el estado');
       }
     });
   }
